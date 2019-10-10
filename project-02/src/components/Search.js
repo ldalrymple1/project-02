@@ -9,7 +9,8 @@ class Search extends React.Component {
       genres: [],
       selectedGenre: '',
       searchActor: '',
-      actorID: null
+      actorID: null,
+      searchOutput: []
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -32,16 +33,17 @@ class Search extends React.Component {
     // console.log('I have submitted', this.state)
     const filteredGenre = this.filteredGenre()
     const formattedActorName = this.formatActorName()
-    console.log(formattedActorName, filteredGenre)
+    // console.log(formattedActorName, filteredGenre)
+    
 
     axios.get(`https://api.themoviedb.org/3/search/person?include_adult=false&query=${formattedActorName}&&page=1&language=en-US&api_key=${process.env.MOVIEDB_ACCESS_TOKEN}`)
       .then(res => {
         this.setState({ actorID: res.data.results.pop().id })
-
-        axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIEDB_ACCESS_TOKEN}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_people=${this.state.actorID}${filteredGenre}&page=1`)
-          .then(res => console.log('new', res.data))
+        //add error if the typed name is wrong (NEED CLASSES)
+        this.props.history.push(`/search/${filteredGenre}&with_people=${this.state.actorID}`)
+            
       })
-      //add error if the typed name is wrong (NEED CLASSES)
+      
 
   }
 
@@ -64,6 +66,7 @@ class Search extends React.Component {
 
   render() {
     console.log('state change', this.state)
+    console.log('state props', this.props)
     const { genres } = this.state
     return (
       <form onSubmit={this.handleSubmit}>
