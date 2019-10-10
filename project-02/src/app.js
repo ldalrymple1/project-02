@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Switch, Link, Route } from 'react-router-dom'
-import './style.scss'
+
 
 import Search from './components/Search'
 import Index from './components/Index'
@@ -16,13 +16,18 @@ class App extends React.Component {
     console.log(this.state)
     return (
       <BrowserRouter>
-        <main>
-          <Switch>
-            <Route exact path="/search" component={Search}/>
-            <Route path="/movies/:id" component={Show} />
-            <Route path="/search/:id" component={Index} />
-          </Switch>
-        </main>
+        <div className="page-wrapper">
+          <nav>
+            <Link to="/search" className="title-name">FILMZ</Link>
+          </nav>
+          <main>
+            <Switch>
+              <Route exact path="/search" component={Search}/>
+              <Route path="/movies/:id" component={Show} />
+              <Route path="/search/:id" component={Index} />
+            </Switch>
+          </main>
+        </div>
       </BrowserRouter>
 
     )

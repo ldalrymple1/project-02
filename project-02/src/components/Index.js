@@ -2,6 +2,8 @@ import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
+import '../styles/index.scss'
+
 
 class Index extends React.Component {
   constructor() {
@@ -31,7 +33,9 @@ class Index extends React.Component {
           <Link to={`/movies/${movie.id}`} key={movie.id}>
             <div className="card">
               <img src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} alt={movie.title}></img>
-              <p>{movie.title}</p>
+              <div className="title-wrapper">
+                <p className="film-title">{movie.title.toUpperCase()}</p>
+              </div>
             </div>
           </Link>
         )}

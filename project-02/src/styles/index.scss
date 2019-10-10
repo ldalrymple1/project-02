@@ -1,0 +1,42 @@
+@font-face {
+  font-family: 'Biryani', sans-serif;
+  src: url('https://fonts.googleapis.com/css?family=Biryani:900&display=swap');
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-left: 100px;
+  
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border: 2px solid black;
+  margin: 10px;
+  font-family: 'Biryani', sans-serif;
+  max-width: 300px;
+  max-height: 500px;
+  img {
+    transform: scale(.85);
+    margin: 0;
+  }
+  .title-wrapper {
+    
+
+    .film-title {
+      font-family: 'Biryani', sans-serif;
+      font-size: 20px;
+      text-decoration: none;
+      color: black;
+      border: black;
+      margin-bottom: 5px;
+    
+  }
+  }
+  
+}
+

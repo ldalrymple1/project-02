@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 
+import '../styles/search.scss'
+
 class Search extends React.Component {
   constructor() {
     super()
@@ -60,7 +62,7 @@ class Search extends React.Component {
   }
 
   filteredGenre() {
-    if (this.state.selectedGenre !== 'Genre' && this.state.selectedGenre !== '') {
+    if (this.state.selectedGenre !== 'GENRE' && this.state.selectedGenre !== '') {
       return `&with_genres=${this.state.genres.filter(genre => genre.name === this.state.selectedGenre ).pop().id}`
     } else {
       return ''
@@ -73,15 +75,28 @@ class Search extends React.Component {
     console.log('state props', this.props)
     const { genres } = this.state
     return (
-      <form onSubmit={this.handleSubmit}>
-        <select onChange={this.handleChange} name="selectedGenre">
-          <option>Genre</option>
-          {genres.map(genre => <option key={genre.id}>{genre.name}</option>)}
-        </select>
-        <br></br>
-        <input type="text" placeholder="Actor Name..." onChange={this.handleChange} name="searchActor"/>
-        <button>Submit</button>
-      </form>
+      <div className="form-line-wrapper">
+        <div className="first-second-wrapper">
+          <div className="firsthalf">
+            <h1>MAKE A CHOICE:</h1>
+          </div>
+          <div className="secondhalf">
+            <form onSubmit={this.handleSubmit}>
+              <select onChange={this.handleChange} name="selectedGenre">
+                <option>GENRE</option>
+                {genres.map(genre => <option key={genre.id}>{genre.name}</option>)}
+              </select>
+              <br></br>
+              <input type="text" placeholder="ACTOR" onChange={this.handleChange} name="searchActor"/>
+              <br></br>
+              <button>SUBMIT</button>
+            </form>
+          </div>
+        </div>
+        <div className="bottomline">
+          <div className="line"></div>
+        </div>
+      </div>
     )
   }
 }
