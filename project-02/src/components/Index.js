@@ -26,7 +26,7 @@ class Index extends React.Component {
     return (
       <div className="wrapper">
         {this.state.movies.map(movie =>
-          <Link to={`/search/${this.props.match.params.id}/${movie.id}`} key={movie.id}>
+          <Link to={`/movies/${movie.id}`} key={movie.id}>
             <div className="card">
               <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title}></img>
               <p>{movie.title}</p>
