@@ -6,8 +6,15 @@ class Search extends React.Component {
     super()
 
     this.state = {
-      genres: []
+      genres: [],
+      selectedGenre: '',
+      searchActor: ''
+
+      
     }
+
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
 
   }
 
@@ -17,19 +24,31 @@ class Search extends React.Component {
       .catch(err => console.log(err))
   }
 
+  handleChange(e) {
+    console.log(e.target.value)
+    this.setState({ [e.target.name]: e.target.value })
+
+  }
+
+  handleSubmit(e) {
+    e.preventDefault()
+    console.log('I have submitted')
+
+  }
+
 
   render() {
-    console.log('state change', this.state.genres)
+    console.log('state change', this.state)
     const { genres } = this.state
-    console.log('genrerenrenrenr', genres)
     return (
-      <form>
-        <select>
+      <form onSubmit={this.handleSubmit}>
+        <select onChange={this.handleChange} name="selectedGenre">
           <option>Genre</option>
           {genres.map(genre => <option key={genre.id}>{genre.name}</option>)}
         </select>
         <br></br>
-        <input type="text" placeholder="Actor Name..." />
+        <input type="text" placeholder="Actor Name..." onChange={this.handleChange} name="searchActor"/>
+        <button>Submit</button>
       </form>
     )
   }
