@@ -35,14 +35,18 @@ class Search extends React.Component {
     const formattedActorName = this.formatActorName()
     // console.log(formattedActorName, filteredGenre)
     
+    if (this.state.searchActor === '') return this.props.history.push(`/search/${filteredGenre}`)
+    else {
+      axios.get(`https://api.themoviedb.org/3/search/person?include_adult=false&query=${formattedActorName}&&page=1&language=en-US&api_key=${process.env.MOVIEDB_ACCESS_TOKEN}`)
+        .then(res => {
+          this.setState({ actorID: res.data.results.pop().id })
+          //add error if the typed name is wrong (NEED CLASSES)
+          const actorIDConcat = `&with_people=${this.state.actorID}`
+          this.props.history.push(`/search/${filteredGenre}${actorIDConcat}`)
+              
+        })
+    }
 
-    axios.get(`https://api.themoviedb.org/3/search/person?include_adult=false&query=${formattedActorName}&&page=1&language=en-US&api_key=${process.env.MOVIEDB_ACCESS_TOKEN}`)
-      .then(res => {
-        this.setState({ actorID: res.data.results.pop().id })
-        //add error if the typed name is wrong (NEED CLASSES)
-        this.props.history.push(`/search/${filteredGenre}&with_people=${this.state.actorID}`)
-            
-      })
       
 
   }
