@@ -1,9 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Switch, Link, Route } from 'react-router-dom'
+import './style.scss'
 
 import Search from './components/Search'
 import Index from './components/Index'
+import Show from './components/Show'
 
 class App extends React.Component {
   constructor() {
@@ -17,6 +19,7 @@ class App extends React.Component {
         <main>
           <Switch>
             <Route exact path="/search" component={Search}/>
+            <Route path="search/:id/:id" component={Show} />
             <Route path="/search/:id" component={Index} />
           </Switch>
         </main>
