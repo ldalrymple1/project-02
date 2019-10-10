@@ -30,9 +30,11 @@ class Index extends React.Component {
       <div className="wrapper">
         {this.state.movies.map(movie =>
         // write IF condition catch broken images
-          <Link to={`/movies/${movie.id}`} key={movie.id}>
+          <Link className="link" to={`/movies/${movie.id}`} key={movie.id}>
             <div className="card">
-              <img src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} alt={movie.title}></img>
+              <div className="poster-wrapper">
+                <img src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} alt={movie.title}></img>
+              </div>
               <div className="title-wrapper">
                 <p className="film-title">{movie.title.toUpperCase()}</p>
               </div>

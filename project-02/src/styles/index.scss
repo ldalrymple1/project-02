@@ -11,6 +11,10 @@
   
 }
 
+.link {
+  text-decoration: none;
+}
+
 .card {
   display: flex;
   flex-direction: column;
@@ -20,12 +24,20 @@
   font-family: 'Biryani', sans-serif;
   max-width: 300px;
   max-height: 500px;
-  img {
-    transform: scale(.85);
-    margin: 0;
+  
+  .poster-wrapper {
+    height: 420px;
+    img {
+      transform: scale(.85);
+      margin: 0;
+    }
   }
   .title-wrapper {
-    
+    height: 80px;
+    // background: orange; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     .film-title {
       font-family: 'Biryani', sans-serif;
@@ -33,7 +45,9 @@
       text-decoration: none;
       color: black;
       border: black;
+      margin-top: 0px;
       margin-bottom: 5px;
+      font-weight: 800;
     
   }
   }
