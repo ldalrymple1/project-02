@@ -8,14 +8,11 @@ class Search extends React.Component {
     this.state = {
       genres: [],
       selectedGenre: '',
-      searchActor: ''
-
-      
+      searchActor: '',
+      actorID: null
     }
-
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-
   }
 
   componentDidMount() {
@@ -25,15 +22,43 @@ class Search extends React.Component {
   }
 
   handleChange(e) {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     this.setState({ [e.target.name]: e.target.value })
 
   }
 
   handleSubmit(e) {
     e.preventDefault()
-    console.log('I have submitted')
+    // console.log('I have submitted', this.state)
+    const filteredGenre = this.filteredGenre()
+    const formattedActorName = this.formatActorName()
+    console.log(formattedActorName, filteredGenre)
 
+    axios.get(`https://api.themoviedb.org/3/search/person?include_adult=false&query=${formattedActorName}&&page=1&language=en-US&api_key=${process.env.MOVIEDB_ACCESS_TOKEN}`)
+      .then(res => {
+        this.setState({ actorID: res.data.results.pop().id })
+
+        axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIEDB_ACCESS_TOKEN}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_people=${this.state.actorID}${filteredGenre}&page=1`)
+          .then(res => console.log('new', res.data))
+      })
+      //add error if the typed name is wrong (NEED CLASSES)
+
+  }
+
+  formatActorName() {
+    if (this.state.searchActor.split(' ').length > 1) {
+      return this.state.searchActor.toLowerCase().split(' ').join('-')
+    } else {
+      return this.state.searchActor.toLowerCase()
+    }
+  }
+
+  filteredGenre() {
+    if (this.state.selectedGenre !== 'Genre' && this.state.selectedGenre !== '') {
+      return `&with_genres=${this.state.genres.filter(genre => genre.name === this.state.selectedGenre ).pop().id}`
+    } else {
+      return ''
+    }
   }
 
 
