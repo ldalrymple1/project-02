@@ -14,7 +14,8 @@ class Search extends React.Component {
       searchActor: '',
       actorID: null,
       searchOutput: [],
-      submitting: false
+      submitting: false,
+      error: false
 
     }
     this.handleChange = this.handleChange.bind(this)
@@ -30,7 +31,6 @@ class Search extends React.Component {
   handleChange(e) {
     // console.log(e.target.value)
     this.setState({ [e.target.name]: e.target.value })
-
   }
 
   handleSubmit(e) {
@@ -40,27 +40,29 @@ class Search extends React.Component {
     const formattedActorName = this.formatActorName()
     // console.log(formattedActorName, filteredGenre)
 
-    this.setState({ submitting: true })
-    
-    setTimeout(() => {
-      if (this.state.searchActor === '') return this.props.history.push(`/search/${filteredGenre}`)
-      else {
-        axios.get(`https://api.themoviedb.org/3/search/person?include_adult=false&query=${formattedActorName}&&page=1&language=en-US&api_key=${process.env.MOVIEDB_ACCESS_TOKEN}`)
-          .then(res => {
-            this.setState({ actorID: res.data.results.pop().id })
+    if (this.state.searchActor === '') return this.props.history.push(`/search/${filteredGenre}`)
+    else {
+      axios.get(`https://api.themoviedb.org/3/search/person?include_adult=false&query=${formattedActorName}&&page=1&language=en-US&api_key=${process.env.MOVIEDB_ACCESS_TOKEN}`)
+        .then(res => {
+          if (res.data.results.length === 0) {
+
+            this.setState({ error: true, searchActor: 'Invalid search' })
+            setTimeout(() => {
+
+              return this.setState({ error: false })
+            },3000)
+            return
+          }
+          this.setState({ actorID: res.data.results.pop().id })
+          this.setState({ submitting: true })
+          setTimeout(() => {
             //add error if the typed name is wrong (NEED CLASSES)
             const actorIDConcat = `&with_people=${this.state.actorID}`
             this.props.history.push(`/search/${filteredGenre}${actorIDConcat}`)
+          }, 800)
 
-          })
-      }
-
-    },1000)
-
-
-
-      
-
+        })
+    }
   }
 
   formatActorName() {
@@ -73,31 +75,37 @@ class Search extends React.Component {
 
   filteredGenre() {
     if (this.state.selectedGenre !== 'GENRE' && this.state.selectedGenre !== '') {
-      return `&with_genres=${this.state.genres.filter(genre => genre.name === this.state.selectedGenre ).pop().id}`
+      return `&with_genres=${this.state.genres.filter(genre => genre.name === this.state.selectedGenre).pop().id}`
     } else {
       return ''
     }
   }
 
-
   render() {
     console.log('state change', this.state)
-    console.log('state props', this.props)
-    const { genres, submitting } = this.state
+    // console.log('state props', this.props)
+    const { genres, submitting, error } = this.state
     return (
-      <div className={`form-line-wrapper ${submitting ? 'animated fadeOutLeft' : ''}`}>
+      <div className={`form-line-wrapper animated fadeIn ${submitting ? 'fadeOutLeft' : ''}`}>
         <div className="first-second-wrapper">
           <div className="firsthalf">
-            <h1>MAKE A CHOICE:</h1>
+            {!error ? 
+              <h1>MAKE A CHOICE:</h1> :
+              <h1 className="invalid-input">INVALID SEARCH</h1>
+            }
+            
+            
           </div>
           <div className="secondhalf">
             <form onSubmit={this.handleSubmit}>
-              <select onChange={this.handleChange} name="selectedGenre">
-                <option>GENRE</option>
-                {genres.map(genre => <option key={genre.id}>{genre.name}</option>)}
-              </select>
+              <div className="custom-select">
+                <select onChange={this.handleChange} name="selectedGenre">
+                  <option>GENRE</option>
+                  {genres.map(genre => <option key={genre.id}>{genre.name}</option>)}
+                </select>
+              </div>
               <br></br>
-              <input type="text" placeholder="ACTOR" onChange={this.handleChange} name="searchActor"/>
+              <input className={`${this.state.error ? 'input-error' : ''}`} type="text" placeholder="ACTOR" onChange={this.handleChange} name="searchActor" />
               <br></br>
               <button>SUBMIT</button>
             </form>

@@ -4,7 +4,6 @@
 }
 
 nav {
-  // background-color: black;
   font-family: 'Biryani', sans-serif;
   height: 50px;
   display: flex;
@@ -13,12 +12,22 @@ nav {
   .title-name {
     color: black;
     font-weight: 800;
-    // color: white;
-    margin-left: 20px;
+    // margin-left: 20px;
     text-decoration: none;
     font-size: 20px;
+    transition: all .2s ease-in-out;
+  }
+  img {
+    transform: scale(.2);
   }
 }
+
+.title-name:hover{
+  transform: scale(1.08);
+}
+// .hidden {
+//   display: none;
+// }
 
 
 

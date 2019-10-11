@@ -25,7 +25,7 @@ class Show extends React.Component {
   render() {
     if (!this.state.movieInfo) return null
     return (
-      <div className="container">
+      <div className="container animated fadeInRight">
         <div className="show-wrapper">
           <div className="movie-image">
             <img src={`https://image.tmdb.org/t/p/w300${this.state.movieInfo.poster_path}`} alt={this.state.movieInfo.title}></img>

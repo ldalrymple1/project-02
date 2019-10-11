@@ -11,7 +11,8 @@ class Index extends React.Component {
     super()
 
     this.state = {
-      movies: []
+      movies: [],
+      searchResult: false
     }
 
   
@@ -20,15 +21,27 @@ class Index extends React.Component {
 
   componentDidMount() {
     axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIEDB_ACCESS_TOKEN}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false${this.props.match.params.id}&page=1`)
-      .then(res => this.setState({ movies: res.data.results }))
+      .then(res => {
+        if (res.data.results.length === 0) this.setState({ searchResult: true })
+        this.setState({ movies: res.data.results })
+
+      })
       .catch(err => console.log(err))
       
   }
   
   render() {
     console.log(this.state)
+    if (this.state.searchResult) {
+      return (
+        <div className="error-response animated fadeInRight">
+          <h1>OOPS! There were no results for your search...</h1>
+        </div>
+      )
+    }
+    if (!this.state.movies) return null
     return (
-      <div className="wrapper animated fadeInRight" >
+      <div className="wrapper animated fadeInRight">
         {this.state.movies.map(movie =>
         // write IF condition catch broken images
           <Link className="link" to={`/movies/${movie.id}`} key={movie.id}>
