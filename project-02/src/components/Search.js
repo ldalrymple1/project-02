@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 
 import '../styles/search.scss'
+import '../styles/animate.css'
 
 class Search extends React.Component {
   constructor() {
@@ -12,7 +13,9 @@ class Search extends React.Component {
       selectedGenre: '',
       searchActor: '',
       actorID: null,
-      searchOutput: []
+      searchOutput: [],
+      submitting: false
+
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -36,18 +39,25 @@ class Search extends React.Component {
     const filteredGenre = this.filteredGenre()
     const formattedActorName = this.formatActorName()
     // console.log(formattedActorName, filteredGenre)
+
+    this.setState({ submitting: true })
     
-    if (this.state.searchActor === '') return this.props.history.push(`/search/${filteredGenre}`)
-    else {
-      axios.get(`https://api.themoviedb.org/3/search/person?include_adult=false&query=${formattedActorName}&&page=1&language=en-US&api_key=${process.env.MOVIEDB_ACCESS_TOKEN}`)
-        .then(res => {
-          this.setState({ actorID: res.data.results.pop().id })
-          //add error if the typed name is wrong (NEED CLASSES)
-          const actorIDConcat = `&with_people=${this.state.actorID}`
-          this.props.history.push(`/search/${filteredGenre}${actorIDConcat}`)
-              
-        })
-    }
+    setTimeout(() => {
+      if (this.state.searchActor === '') return this.props.history.push(`/search/${filteredGenre}`)
+      else {
+        axios.get(`https://api.themoviedb.org/3/search/person?include_adult=false&query=${formattedActorName}&&page=1&language=en-US&api_key=${process.env.MOVIEDB_ACCESS_TOKEN}`)
+          .then(res => {
+            this.setState({ actorID: res.data.results.pop().id })
+            //add error if the typed name is wrong (NEED CLASSES)
+            const actorIDConcat = `&with_people=${this.state.actorID}`
+            this.props.history.push(`/search/${filteredGenre}${actorIDConcat}`)
+
+          })
+      }
+
+    },1000)
+
+
 
       
 
@@ -73,9 +83,9 @@ class Search extends React.Component {
   render() {
     console.log('state change', this.state)
     console.log('state props', this.props)
-    const { genres } = this.state
+    const { genres, submitting } = this.state
     return (
-      <div className="form-line-wrapper">
+      <div className={`form-line-wrapper ${submitting ? 'animated fadeOutLeft' : ''}`}>
         <div className="first-second-wrapper">
           <div className="firsthalf">
             <h1>MAKE A CHOICE:</h1>

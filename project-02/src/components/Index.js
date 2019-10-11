@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 
 import '../styles/index.scss'
+import '../styles/animate.css'
 
 
 class Index extends React.Component {
@@ -27,7 +28,7 @@ class Index extends React.Component {
   render() {
     console.log(this.state)
     return (
-      <div className="wrapper">
+      <div className="wrapper animated fadeInRight" >
         {this.state.movies.map(movie =>
         // write IF condition catch broken images
           <Link className="link" to={`/movies/${movie.id}`} key={movie.id}>

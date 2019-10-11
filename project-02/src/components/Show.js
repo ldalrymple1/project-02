@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import '../styles/show.scss'
 import '../styles/navbar.scss'
+import '../styles/animate.css'
 
 class Show extends React.Component {
   constructor() {
