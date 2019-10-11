@@ -24,21 +24,25 @@ class Show extends React.Component {
   render() {
     if (!this.state.movieInfo) return null
     return (
-      <div className="show-wrapper">
-        <div className="movie-image">
-          <img src={`https://image.tmdb.org/t/p/w300${this.state.movieInfo.poster_path}`} alt={this.state.movieInfo.title}></img>
-          
-        </div>
-        <div className="movie-bio">
-          <h1>{this.state.movieInfo.title}</h1>
-          <h4>Overview</h4>
-          <p>{this.state.movieInfo.overview}</p>
-          <p>Runtime: {this.state.movieInfo.runtime} minutes</p>
-          <p>Release Date: {this.state.movieInfo.release_date}</p>
-          <p>Vote average: {this.state.movieInfo.vote_average}</p>
-        </div>
-        <div className="carousel">
+      <div className="container">
+        <div className="show-wrapper">
+          <div className="movie-image">
+            <img src={`https://image.tmdb.org/t/p/w300${this.state.movieInfo.poster_path}`} alt={this.state.movieInfo.title}></img>
 
+          </div>
+          <div className="movie-bio">
+            <h1>{this.state.movieInfo.title}</h1>
+            <h2>Overview</h2>
+            <p>{this.state.movieInfo.overview}</p>
+            <p><strong>Runtime:</strong> {this.state.movieInfo.runtime} minutes</p>
+            <p><strong>Release Date:</strong> {this.state.movieInfo.release_date}</p>
+            <p><strong>Vote average:</strong> {this.state.movieInfo.vote_average}</p>
+          </div>
+        </div>
+        <div className="carousel-wrapper">
+          <div className="carousel">
+            <h1>Carousel</h1>
+          </div>
         </div>
       </div>
     )
