@@ -18,7 +18,7 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <div className="page-wrapper">
-          <nav className="hidden">
+          <nav className="">
             <Link to="/">
               <img src={LightningImage} />
             </Link>
