@@ -112,12 +112,12 @@ Similarly, if the user clicks on search without having selected a genre or actor
 # Future Features
 
 With more time, these are the additional features I would like to add:
-Adding more functionality for filtered searches e.g. 
-By director
-By decade
-By mood, with a mood board
-A randomiser button that would return a random movie
-A toggle that would change the search results from movies to TV shows as well as inverse the styling theme to be a black background with white writing rather than the other way round.
+ - Adding more functionality for filtered searches e.g. 
+    - By director
+    - By decade
+    - By mood, with a mood board
+ - A randomiser button that would return a random movie
+ - A toggle that would change the search results from movies to TV shows as well as inverse the styling theme to be a black background with white writing rather than the other way round.
 
 
 
