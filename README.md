@@ -75,9 +75,9 @@ As previously mentioned, the most difficult part of this project was the beginni
 
 We looked at Spotify, Deezer, Eventbrite, Cine List, Skyscanner and Mapbox. Some of these we had to wait for a response from the internal dev teams and others weren’t very easy to understand (documentation). This helped us to settle on the MovieDB API.
 
-# Code Snippets
+# Wins
 
-For our error handlers, we decided to set searchResult to false in our state. If no results came back from our API call searchResult would remain false in state. We wrote this error handler after render to inform the user that there were no results for their search.
+We successfully created error handlers. We decided to set searchResult to false in our state. If no results came back from our API call searchResult would remain false in state. We wrote this error handler after render to inform the user that there were no results for their search.
 
 ```
 render() {
